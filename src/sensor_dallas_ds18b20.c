@@ -1,4 +1,5 @@
 /*
+#include <packages/ds18b20-modif-by-caoxin/inc/sensor_dallas_ds18b20.h>
  * Copyright (c) 2006-2018, RT-Thread Development Team
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -9,10 +10,10 @@
  * 2020-07-28     WillianChan     add ds18b20 init error message
  */
 
-#include "sensor_dallas_ds18b20.h"
 #include "sensor.h"
 #include "board.h"
 #include <rtdbg.h>
+#include "sensor_dallas_ds18b20.h"
 
 #define DBG_TAG "sensor.dallas.ds18b20"
 #define DBG_LVL DBG_INFO

@@ -1,4 +1,5 @@
 /*
+#include <packages/ds18b20-modif-by-caoxin/inc/sensor_dallas_ds18b20.h>
  * Copyright (c) 2006-2018, RT-Thread Development Team
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -13,10 +14,10 @@
 #include <rtthread.h>
 #include "board.h"
 #include "sensor.h"
-#include "sensor_dallas_ds18b20.h"
+#include "tempture_watcher.h"
 
 /* Modify this pin according to the actual wiring situation */
-#define DS18B20_DATA_PIN    GET_PIN(G, 9)
+#define DS18B20_DATA_PIN    GET_PIN(B, 8)
 
 static void read_temp_entry(void *parameter)
 {
@@ -49,22 +50,25 @@ static void read_temp_entry(void *parameter)
         }
         else
         {
-            if (sensor_data.data.temp >= 0)
-            {
-                rt_kprintf("temp:%3d.%dC, timestamp:%5d\n",
-                           sensor_data.data.temp / 10,
-                           sensor_data.data.temp % 10,
-                           sensor_data.timestamp);
-            }
-            else
-            {
-                rt_kprintf("temp:-%2d.%dC, timestamp:%5d\n",
-                           abs(sensor_data.data.temp / 10),
-                           abs(sensor_data.data.temp % 10),
-                           sensor_data.timestamp);
-            }
+            rt_mutex_take(temp_watcher.temp_mutex, RT_WAITING_FOREVER);
+            temp_watcher.cur_temp = sensor_data.data.temp;
+            rt_mutex_release(temp_watcher.temp_mutex);
+//            if (sensor_data.data.temp >= 0)
+//            {
+//                rt_kprintf("temp:%3d.%dC, timestamp:%5d\n",
+//                           sensor_data.data.temp / 10,
+//                           sensor_data.data.temp % 10,
+//                           sensor_data.timestamp);
+//            }
+//            else
+//            {
+//                rt_kprintf("temp:-%2d.%dC, timestamp:%5d\n",
+//                           abs(sensor_data.data.temp / 10),
+//                           abs(sensor_data.data.temp % 10),
+//                           sensor_data.timestamp);
+//            }
         }
-        rt_thread_mdelay(100);
+        rt_thread_mdelay(500);
     }
 }
 

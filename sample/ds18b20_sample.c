@@ -51,9 +51,9 @@ static void read_temp_entry(void *parameter)
         }
         else
         {
-            rt_mutex_take(temp_watcher.temp_mutex, RT_WAITING_FOREVER);
-            temp_watcher.cur_temp = sensor_data.data.temp;
-            rt_mutex_release(temp_watcher.temp_mutex);
+            rt_mutex_take(TW.temp_mutex, RT_WAITING_FOREVER);
+            TW.cur_temp = sensor_data.data.temp;
+            rt_mutex_release(TW.temp_mutex);
 //            if (sensor_data.data.temp >= 0)
 //            {
 //                rt_kprintf("temp:%3d.%dC, timestamp:%5d\n",

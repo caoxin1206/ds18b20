@@ -10,10 +10,11 @@
  * 2020-07-28     WillianChan     add ds18b20 init error message
  */
 
-#include "sensor.h"
+#include "drivers/sensor.h"
 #include "board.h"
 #include <rtdbg.h>
 #include "sensor_dallas_ds18b20.h"
+#include "drv_common.h"
 
 #define DBG_TAG "sensor.dallas.ds18b20"
 #define DBG_LVL DBG_INFO
@@ -21,15 +22,6 @@
 #define SENSOR_TEMP_RANGE_MAX (125)
 #define SENSOR_TEMP_RANGE_MIN (-55)
 
-RT_WEAK void rt_hw_us_delay(rt_uint32_t us)
-{
-    rt_uint32_t delta;
-
-    us = us * (SysTick->LOAD / (1000000 / RT_TICK_PER_SECOND));
-    delta = SysTick->VAL;
-
-    while (delta - SysTick->VAL < us) continue;
-}
 
 static void ds18b20_reset(rt_base_t pin)
 {

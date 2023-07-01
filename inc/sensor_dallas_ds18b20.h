@@ -15,7 +15,7 @@
 #include <rthw.h>
 #include <rtthread.h>
 #include <rtdevice.h>
-#include "sensor.h"
+#include "drivers/sensor.h"
 
 #define CONNECT_SUCCESS  0
 #define CONNECT_FAILED   1
